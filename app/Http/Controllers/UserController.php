@@ -8,26 +8,42 @@ use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
-    public function viewUsers(){
+    public function viewUsers()
+    {
         return view('admin.users.index_users');
     }
 
-    public function getUsers(Request $request){
+    public function getUsers(Request $request)
+    {
         try {
-            $users = User::with('roles')->paginate(10);
+            $search = $request->input('search');
+
+            $query = User::with('roles');
+
+            if ($search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%");
+                });
+            }
+
+            $users = $query->paginate(10); // Tamaño de página fijo o configurable
+
             return response()->json([
                 'success' => true,
-                'data' => $users
+                'data' => $users->items(),
+                'current_page' => $users->currentPage(),
+                'last_page' => $users->lastPage(),
+                'total' => $users->total()
             ]);
-        }catch(\Exception $e){
-
+        } catch (\Exception $e) {
             Log::error('Error al obtener los usuarios: ' . $e->getMessage());
 
             return response()->json([
                 'success' => false,
                 'message' => 'No se pudo obtener la lista de usuarios.',
                 'error' => $e->getMessage(),
-            ],500);
+            ], 500);
         }
     }
 }
