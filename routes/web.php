@@ -22,7 +22,7 @@ Route::middleware('auth')->group(function () {
     //Ruta para la vista de los usuarios
     Route::get('admin/usuarios', [UserController::class, 'viewUsers'])->name('usuarios.view');
      //Ruta api para obtener los usuarios en formato JSON
-    Route::get('admin/api/usuarios', [UserController::class, 'getUsers'])->name('usuarios.get');
+    Route::get('admin/api/usuarios', [UserController::class, 'getUsers'])->name('usuarios.api');
 });
 
 require __DIR__.'/auth.php';

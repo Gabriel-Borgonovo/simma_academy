@@ -34,7 +34,8 @@ class UserController extends Controller
                 'data' => $users->items(),
                 'current_page' => $users->currentPage(),
                 'last_page' => $users->lastPage(),
-                'total' => $users->total()
+                'total' => $users->total(),
+                'per_page' => $users->perPage()
             ]);
         } catch (\Exception $e) {
             Log::error('Error al obtener los usuarios: ' . $e->getMessage());
