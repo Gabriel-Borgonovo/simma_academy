@@ -47,6 +47,23 @@
             @endif
         </div>
 
+        {{-- Edición de la imagen de perfil --}}
+         <div>
+            <x-input-label for="profile_image" :value="__('Profile Image')" />
+            <input type="file" id="profile_image" name="profile_image" class="mt-1 block w-full" accept="image/*">
+            <x-input-error class="mt-2" :messages="$errors->get('profile_image')" />
+
+            @if ($user->profile_image)
+                @if (env('APP_ENV') === 'production')
+                    <img src="{{ asset($user->profile_image) }}" alt="Profile Image" class="mt-2"
+                        width="100">
+                @else
+                    <img src="{{ asset('storage/' . $user->profile_image) }}" alt="Profile Image" class="mt-2"
+                        width="100">
+                @endif
+            @endif
+        </div>
+
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
 

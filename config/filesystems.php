@@ -60,6 +60,13 @@ return [
             'report' => false,
         ],
 
+         'custom' => [
+            'driver' => 'local',
+            'root' => public_path('../public_html'),
+            'url' => env('APP_URL') . '/public_html',
+            'visibility' => 'public',
+        ],
+
     ],
 
     /*
