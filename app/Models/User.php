@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'profile_image',
     ];
 
     /**
@@ -45,5 +46,25 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+
+     public function getProfileImageUrlAttribute()
+    {
+        // Ruta a la imagen por defecto
+        $defaultProfileImage = 'imgs/profile_images/default.png';
+
+        if ($this->profile_image) {
+            if (env('APP_ENV') === 'production') {
+                // Entorno de producción
+                return asset($this->profile_image);
+            } else {
+                // Otros entornos (desarrollo, pruebas, etc.)
+                return asset('storage/' . $this->profile_image);
+            }
+        }
+
+        // Retorna la ruta de la imagen por defecto si no hay una imagen de perfil
+        return asset($defaultProfileImage);
     }
 }
