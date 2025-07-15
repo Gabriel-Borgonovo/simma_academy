@@ -13,3 +13,8 @@ window.paginationHelper = paginationHelper;
 import generateTableHelper from './helpers/generateTableHelper';
 
 window.generateTableHelper = generateTableHelper;
+
+import ajaxHelper from './helpers/ajaxHelper';
+
+// Haz que ajaxHelper esté disponible globalmente
+window.ajaxHelper = ajaxHelper;
